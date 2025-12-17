@@ -4,6 +4,29 @@
 
 //Escribe aquí tu solución / escriviu aquí la vostra solució:
 
+async function countDown(amount, stepCallback) {
+    if(typeof stepCallback !== "function"){
+        throw new Error("ERROR. Es obligatorio el paso de un callback como segundo parámetro.");
+    }
+
+    return new Promise((resolve, reject) => {
+        if(amount <= 0){
+            reject(new Error("ERROR. La cantidad ha de ser positiva y mayor que 0."));
+            return;
+        }
+
+        let current = amount;
+        const intervalID = setInterval(() => {
+            current--;
+            stepCallback(current);
+
+            if (current === 0) {
+                clearInterval(intervalID);
+                resolve(true);
+            }
+        }, 100);      
+    })
+}
 
 /**
 * TEST
